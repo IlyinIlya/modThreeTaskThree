@@ -75,7 +75,7 @@ public class StudentControllerTest {
         assertTrue(java.util.Arrays
                 .stream(testResult)
                 .anyMatch(student -> "Max Sedrik"
-                .equals(student.getName()) && student.getAge() == 17));
+                        .equals(student.getName()) && student.getAge() == 17));
         for (Student student : testResult) {
             assertTrue(student.getAge() >= 17);
             assertTrue(student.getAge() <= 18);
@@ -83,7 +83,7 @@ public class StudentControllerTest {
     }
 
     @Test
-    void testGetStudentFaculty(){
+    void testGetStudentFaculty() {
         Faculty testFaculty = new Faculty();
         testFaculty.setName("Gryffindor");
         testFaculty.setColor("orange");
@@ -98,7 +98,7 @@ public class StudentControllerTest {
                 testStudent, Student.class);
 
         Faculty testResult = restTemplate.getForObject("http://localhost:" + port + "/student/"
-                        + testNewStudent.getId() + "/faculty", Faculty.class);
+                + testNewStudent.getId() + "/faculty", Faculty.class);
 
         assertNotNull(testResult);
         assertEquals(testNewFaculty.getId(), testResult.getId());

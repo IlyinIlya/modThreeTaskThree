@@ -1,5 +1,6 @@
 package ru.hogwarts.school.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -52,6 +53,7 @@ public class Faculty {
         this.color = color;
     }
 
+    @JsonIgnore
     public List<Student> getStudents() {
         return students;
     }

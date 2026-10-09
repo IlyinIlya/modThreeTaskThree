@@ -24,9 +24,10 @@ public class FacultyControllerTest {
     @Test
     void testCreateFaculty() {
         Faculty faculty = new Faculty();
-        faculty.setName("Ravenclaw"); faculty.setColor("blue");
-        Faculty testResult = restTemplate.postForObject( "http://localhost:" + port + "/faculty",
-                faculty, Faculty.class );
+        faculty.setName("Ravenclaw");
+        faculty.setColor("blue");
+        Faculty testResult = restTemplate.postForObject("http://localhost:" + port + "/faculty",
+                faculty, Faculty.class);
 
         assertNotNull(testResult);
         assertNotNull(testResult.getId());
@@ -44,7 +45,7 @@ public class FacultyControllerTest {
                 faculty, Faculty.class);
 
         Faculty testResult = restTemplate.getForObject("http://localhost:" + port + "/faculty/"
-                        + testFaculty.getId(), Faculty.class);
+                + testFaculty.getId(), Faculty.class);
 
         assertNotNull(testResult);
         assertEquals(testFaculty.getId(), testResult.getId());
@@ -63,7 +64,7 @@ public class FacultyControllerTest {
                 faculty, Faculty.class);
 
         Faculty[] testResult = restTemplate.getForObject("http://localhost:" + port
-                        + "/faculty/color?color=blue", Faculty[].class);
+                + "/faculty/color?color=blue", Faculty[].class);
 
         assertNotNull(testResult);
         assertTrue(java.util.Arrays.stream(testResult)
@@ -89,7 +90,7 @@ public class FacultyControllerTest {
         Student testStudent = restTemplate.postForObject("http://localhost:" + port + "/student",
                 student, Student.class);
 
-        Student [] testResult = restTemplate.getForObject("http://localhost:" + port + "/faculty/"
+        Student[] testResult = restTemplate.getForObject("http://localhost:" + port + "/faculty/"
                 + testFaculty.getId() + "/students", Student[].class);
 
         assertNotNull(testResult);
@@ -97,6 +98,4 @@ public class FacultyControllerTest {
                 .anyMatch(s -> testStudent.getId().equals(s.getId())
                         && "Smurfetta".equals(s.getName())));
     }
-
-
 }
