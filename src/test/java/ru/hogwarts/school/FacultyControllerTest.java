@@ -140,6 +140,15 @@ public class FacultyControllerTest {
     }
 
     @Test
+    void testGetMissingFaculty() throws Exception {
+        when(facultyService.get(123456L))
+                .thenReturn(null);
+
+        mockMvc.perform(get("/faculty/123456"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
     void testDeleteFaculty() throws Exception {
         doNothing().when(facultyService).delete(1L);
 

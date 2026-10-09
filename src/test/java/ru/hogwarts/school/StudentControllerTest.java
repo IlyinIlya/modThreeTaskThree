@@ -125,6 +125,15 @@ public class StudentControllerTest {
     }
 
     @Test
+    void testGetMissingStudent() throws Exception {
+        Mockito.when(studentService.get(123456L))
+                .thenReturn(null);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/123456"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
     void testDeleteStudent() throws Exception {
         Mockito.doNothing()
                 .when(studentService)
