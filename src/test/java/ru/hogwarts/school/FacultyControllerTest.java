@@ -98,4 +98,62 @@ public class FacultyControllerTest {
                 .anyMatch(s -> testStudent.getId().equals(s.getId())
                         && "Smurfetta".equals(s.getName())));
     }
+
+    @Test
+    void testGetFacultiesByName() {
+        Faculty faculty = new Faculty();
+        faculty.setName("Browndor");
+        faculty.setColor("brown");
+
+        restTemplate.postForObject("http://localhost:" + port + "/faculty",
+                faculty, Faculty.class);
+
+        Faculty[] testResult = restTemplate.getForObject("http://localhost:" + port
+                        + "/faculty/search?name=Brown", Faculty[].class);
+
+        assertNotNull(testResult);
+        assertTrue(java.util.Arrays.stream(testResult)
+                .anyMatch(f -> "Browndor".equals(f.getName())));
+    }
+
+    @Test
+    void testUpdateFaculty() {
+        Faculty faculty = new Faculty();
+        faculty.setName("Hufflepuff");
+        faculty.setColor("yellow");
+
+        Faculty testNewFaculty = restTemplate.postForObject("http://localhost:" + port + "/faculty",
+                faculty, Faculty.class);
+
+        testNewFaculty.setName("Guffylepuff");
+        testNewFaculty.setColor("green");
+
+        restTemplate.put("http://localhost:" + port + "/faculty/" + testNewFaculty.getId(),
+                testNewFaculty);
+
+        Faculty testResult = restTemplate.getForObject("http://localhost:" + port
+                        + "/faculty/" + testNewFaculty.getId(), Faculty.class);
+
+        assertNotNull(testResult);
+        assertEquals(testNewFaculty.getId(), testResult.getId());
+        assertEquals("Guffylepuff", testResult.getName());
+        assertEquals("green", testResult.getColor());
+    }
+
+    @Test
+    void testDeleteFaculty() {
+        Faculty faculty = new Faculty();
+        faculty.setName("Boring Faculty");
+        faculty.setColor("black");
+
+        Faculty createdFaculty = restTemplate.postForObject("http://localhost:" + port + "/faculty",
+                faculty, Faculty.class);
+
+        restTemplate.delete("http://localhost:" + port + "/faculty/" + createdFaculty.getId());
+
+        Faculty testResult = restTemplate.getForObject("http://localhost:" + port + "/faculty/"
+                        + createdFaculty.getId(), Faculty.class);
+
+        assertNull(testResult);
+    }
 }

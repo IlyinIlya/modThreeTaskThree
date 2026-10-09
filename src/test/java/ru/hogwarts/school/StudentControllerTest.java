@@ -105,4 +105,45 @@ public class StudentControllerTest {
         assertEquals("Gryffindor", testResult.getName());
         assertEquals("orange", testResult.getColor());
     }
+
+    @Test
+    void testUpdateStudent() {
+        Student student = new Student();
+        student.setName("Peter Parker");
+        student.setAge(21);
+
+        Student testNewStudent = restTemplate.postForObject("http://localhost:" + port + "/student",
+                student, Student.class);
+
+        testNewStudent.setName("Mary Jonsons");
+        testNewStudent.setAge(22);
+
+        restTemplate.put("http://localhost:" + port + "/student/" + testNewStudent.getId(),
+                testNewStudent);
+
+        Student testResult = restTemplate.getForObject("http://localhost:" + port + "/student/"
+                        + testNewStudent.getId(), Student.class);
+
+        assertNotNull(testResult);
+        assertEquals(testNewStudent.getId(), testResult.getId());
+        assertEquals("Mary Jonsons", testResult.getName());
+        assertEquals(22, testResult.getAge());
+    }
+
+    @Test
+    void testDeleteStudent() {
+        Student student = new Student();
+        student.setName("Peter Parker");
+        student.setAge(21);
+
+        Student testNewStudent = restTemplate.postForObject("http://localhost:" + port + "/student",
+                student, Student.class);
+
+        restTemplate.delete("http://localhost:" + port + "/student/" + testNewStudent.getId());
+
+        Student testResult = restTemplate.getForObject("http://localhost:" + port + "/student/"
+                        + testNewStudent.getId(), Student.class);
+
+        assertNull(testResult);
+    }
 }
