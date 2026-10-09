@@ -122,7 +122,7 @@ public class StudentControllerTest {
                 testNewStudent);
 
         Student testResult = restTemplate.getForObject("http://localhost:" + port + "/student/"
-                        + testNewStudent.getId(), Student.class);
+                + testNewStudent.getId(), Student.class);
 
         assertNotNull(testResult);
         assertEquals(testNewStudent.getId(), testResult.getId());
@@ -142,7 +142,7 @@ public class StudentControllerTest {
         restTemplate.delete("http://localhost:" + port + "/student/" + testNewStudent.getId());
 
         Student testResult = restTemplate.getForObject("http://localhost:" + port + "/student/"
-                        + testNewStudent.getId(), Student.class);
+                + testNewStudent.getId(), Student.class);
 
         assertNull(testResult);
     }

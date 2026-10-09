@@ -109,7 +109,7 @@ public class FacultyControllerTest {
                 faculty, Faculty.class);
 
         Faculty[] testResult = restTemplate.getForObject("http://localhost:" + port
-                        + "/faculty/search?name=Brown", Faculty[].class);
+                + "/faculty/search?name=Brown", Faculty[].class);
 
         assertNotNull(testResult);
         assertTrue(java.util.Arrays.stream(testResult)
@@ -132,7 +132,7 @@ public class FacultyControllerTest {
                 testNewFaculty);
 
         Faculty testResult = restTemplate.getForObject("http://localhost:" + port
-                        + "/faculty/" + testNewFaculty.getId(), Faculty.class);
+                + "/faculty/" + testNewFaculty.getId(), Faculty.class);
 
         assertNotNull(testResult);
         assertEquals(testNewFaculty.getId(), testResult.getId());
@@ -152,7 +152,7 @@ public class FacultyControllerTest {
         restTemplate.delete("http://localhost:" + port + "/faculty/" + createdFaculty.getId());
 
         Faculty testResult = restTemplate.getForObject("http://localhost:" + port + "/faculty/"
-                        + createdFaculty.getId(), Faculty.class);
+                + createdFaculty.getId(), Faculty.class);
 
         assertNull(testResult);
     }
