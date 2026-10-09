@@ -23,14 +23,18 @@ public class StudentControllerTest {
     @LocalServerPort
     private int port;
 
+
     @Test
     void testCreateStudent() {
         Student student = new Student();
         student.setName("Peter Parker");
         student.setAge(21);
 
-        Student testResult = restTemplate.postForObject("http://localhost:" + port + "/student",
+        ResponseEntity<Student> response = restTemplate.postForEntity("http://localhost:" + port + "/student",
                 student, Student.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        Student testResult = response.getBody();
         assertNotNull(testResult);
         assertNotNull(testResult.getId());
         assertEquals("Peter Parker", testResult.getName());
