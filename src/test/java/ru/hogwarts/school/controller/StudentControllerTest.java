@@ -1,4 +1,4 @@
-package ru.hogwarts.school;
+package ru.hogwarts.school.controller;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -9,7 +9,6 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import ru.hogwarts.school.controller.StudentController;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
