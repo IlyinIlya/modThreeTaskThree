@@ -1,5 +1,6 @@
 package ru.hogwarts.school.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -48,6 +49,7 @@ public class Student {
         this.age = age;
     }
 
+    @JsonIgnore
     public Faculty getFaculty() {
         return faculty;
     }
