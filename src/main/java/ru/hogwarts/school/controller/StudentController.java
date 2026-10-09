@@ -1,6 +1,8 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
@@ -24,7 +26,11 @@ public class StudentController {
 
     @GetMapping("/{id}")
     public Student get(@PathVariable Long id) {
-        return studentService.get(id);
+        Student student = studentService.get(id);
+        if (student == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return student;
     }
 
     @GetMapping("/age")

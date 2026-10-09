@@ -6,6 +6,8 @@ import org.springframework.boot.resttestclient.TestRestTemplate;
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 
@@ -141,9 +143,17 @@ public class StudentControllerTest {
 
         restTemplate.delete("http://localhost:" + port + "/student/" + testNewStudent.getId());
 
-        Student testResult = restTemplate.getForObject("http://localhost:" + port + "/student/"
-                + testNewStudent.getId(), Student.class);
+        ResponseEntity<String> testResult = restTemplate.getForEntity("http://localhost:" + port
+                        + "/student/" + testNewStudent.getId(), String.class);
 
-        assertNull(testResult);
+        assertEquals(HttpStatus.NOT_FOUND, testResult.getStatusCode());
+    }
+
+    @Test
+    void testGetMissingStudent() {
+        ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:" + port
+                        + "/student/123456", String.class);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 }
