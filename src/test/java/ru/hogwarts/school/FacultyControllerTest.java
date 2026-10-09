@@ -6,6 +6,8 @@ import org.springframework.boot.resttestclient.TestRestTemplate;
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 
@@ -151,9 +153,9 @@ public class FacultyControllerTest {
 
         restTemplate.delete("http://localhost:" + port + "/faculty/" + createdFaculty.getId());
 
-        Faculty testResult = restTemplate.getForObject("http://localhost:" + port + "/faculty/"
-                + createdFaculty.getId(), Faculty.class);
+        ResponseEntity<String> testResult = restTemplate.getForEntity("http://localhost:" + port
+                        + "/faculty/" + createdFaculty.getId(), String.class);
 
-        assertNull(testResult);
+        assertEquals(HttpStatus.NOT_FOUND, testResult.getStatusCode());
     }
 }
